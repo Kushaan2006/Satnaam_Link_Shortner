@@ -2,7 +2,7 @@ import { getAllUrls } from "../services/getAllUrls.js";
 
 export const getUrlsController = async (req, res) => {
   try {
-    const urls = await getAllUrls(1);
+    const urls = await getAllUrls(req.user.id);
     return res.status(200).json(urls);
   } catch (error) {
     console.error("Failed to fetch URLs: ", error);
