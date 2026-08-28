@@ -3,7 +3,7 @@ import prisma from "../config/prisma.js";
 export const getAllUrls = async (userId) => {
   const urls = await prisma.url.findMany({
     where: {
-      userId: 1,
+      userId: userId,
     },
     include: {
       click: true,

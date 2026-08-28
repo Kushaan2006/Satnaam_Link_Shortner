@@ -3,7 +3,12 @@ import { createShortUrl } from "../services/urlService.js";
 export const createUrl = async (req, res) => {
   try {
     const { url, custom } = req.body;
-    const result = await createShortUrl(url, custom);
+    if (!url || !url.trim()) {
+      return res.status(400).json({
+        message: "URL is missing",
+      });
+    }
+    const result = await createShortUrl(url, custom, req.user.id);
     console.log(custom?.trim() ? `Created custom URL` : `Short URL created`);
     res.status(201).json(result);
   } catch (error) {

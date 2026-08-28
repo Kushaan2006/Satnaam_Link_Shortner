@@ -1,7 +1,7 @@
 import prisma from "../config/prisma.js";
 import { generateUniqueShortCode } from "../utils/generateShortCode.js";
 
-export const createShortUrl = async (url, custom) => {
+export const createShortUrl = async (url, custom, userId) => {
   const shortCode = custom?.trim()
     ? custom.trim()
     : await generateUniqueShortCode();
@@ -9,7 +9,7 @@ export const createShortUrl = async (url, custom) => {
     data: {
       url: url,
       shortUrl: shortCode,
-      userId: 1,
+      userId: userId,
     },
   });
 };

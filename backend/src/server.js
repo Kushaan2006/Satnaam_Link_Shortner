@@ -1,10 +1,12 @@
 import express from "express";
+import cookieParser from "cookie-parser";
 import urlRoutes from "./routes/urlRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import { redirectUrl } from "./controllers/redirectUrlController.js";
 const app = express();
 
 app.use(express.json());
+app.use(cookieParser());
 
 app.use("/api/urls", urlRoutes);
 
