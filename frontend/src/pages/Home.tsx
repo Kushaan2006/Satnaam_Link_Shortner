@@ -1,4 +1,5 @@
 import { useState } from "react";
+import AuthModal from "../components/AuthModal";
 
 export default function Home() {
   const [url, setUrl] = useState("");
@@ -14,6 +15,7 @@ export default function Home() {
 
   return (
     <>
+      <AuthModal />
       <main>
         <h1>Shorten your link</h1>
         <form onSubmit={handleFormSubmit}>
