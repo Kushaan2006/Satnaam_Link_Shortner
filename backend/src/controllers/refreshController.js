@@ -1,5 +1,6 @@
 import { getSession } from "../services/sessionService.js";
 import { generateAccessToken } from "../utils/generateTokens.js";
+import prisma from "../config/prisma.js";
 
 export const refreshController = async (req, res) => {
   try {
@@ -15,9 +16,23 @@ export const refreshController = async (req, res) => {
         message: "Invalid or Session Expired",
       });
     }
+
+    const user = await prisma.user.findUnique({
+      where: {
+        id: Number(userId),
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+      },
+    });
+
     const accessToken = generateAccessToken(Number(userId));
+
     return res.status(200).json({
       accessToken,
+      user,
     });
   } catch (error) {
     console.error(`Refresh failed - ${error}`);

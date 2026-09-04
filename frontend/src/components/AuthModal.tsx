@@ -5,6 +5,7 @@ import { useAuth } from "../context/AuthContext";
 
 export default function AuthModal() {
   const [mode, setMode] = useState<"login" | "signup">("login");
+  const [visible, setVisible] = useState<true | false>(true);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -42,6 +43,7 @@ export default function AuthModal() {
         setUser(response.data.user);
         setAccessToken(response.data.accessToken);
         console.log(response.data);
+        setVisible(false);
       } catch (error) {
         if (axios.isAxiosError(error)) {
           setMessage(error.response?.data?.message || "Something went wrong");
@@ -55,61 +57,63 @@ export default function AuthModal() {
 
   return (
     <>
-      <div className="modal modal-open">
-        <div className="modal-box">
-          <div className="tabs tabs-boxed mt-4">
-            <button
-              type="button"
-              className={`tab ${mode === "login" ? "tab-active" : ""}`}
-              onClick={() => setMode("login")}
-            >
-              Login
-            </button>
-            <button
-              type="button"
-              className={`tab ${mode === "signup" ? "tab-active" : ""}`}
-              onClick={() => setMode("signup")}
-            >
-              Sign Up
-            </button>
-          </div>
-          {message && <p className="error">{message}</p>}
-          <form onSubmit={handleFormSubmit}>
-            {mode === "signup" && (
+      {visible && (
+        <div className="modal modal-open">
+          <div className="modal-box">
+            <div className="tabs tabs-boxed mt-4">
+              <button
+                type="button"
+                className={`tab ${mode === "login" ? "tab-active" : ""}`}
+                onClick={() => setMode("login")}
+              >
+                Login
+              </button>
+              <button
+                type="button"
+                className={`tab ${mode === "signup" ? "tab-active" : ""}`}
+                onClick={() => setMode("signup")}
+              >
+                Sign Up
+              </button>
+            </div>
+            {message && <p className="error">{message}</p>}
+            <form onSubmit={handleFormSubmit}>
+              {mode === "signup" && (
+                <input
+                  type="text"
+                  className="input input-bordered w-full"
+                  value={name}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                  }}
+                  placeholder="Name"
+                />
+              )}
               <input
-                type="text"
+                type="email"
                 className="input input-bordered w-full"
-                value={name}
+                value={email}
                 onChange={(e) => {
-                  setName(e.target.value);
+                  setEmail(e.target.value);
                 }}
-                placeholder="Name"
+                placeholder="Email"
               />
-            )}
-            <input
-              type="email"
-              className="input input-bordered w-full"
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
-              placeholder="Email"
-            />
-            <input
-              type="password"
-              className="input input-bordered w-full"
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-              placeholder="Password"
-            />
-            <button className="btn btn-primary w-full">
-              {mode === "login" ? "Login" : "Create Account"}
-            </button>
-          </form>
+              <input
+                type="password"
+                className="input input-bordered w-full"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+                placeholder="Password"
+              />
+              <button className="btn btn-primary w-full">
+                {mode === "login" ? "Login" : "Create Account"}
+              </button>
+            </form>
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 }

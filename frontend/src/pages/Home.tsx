@@ -6,8 +6,8 @@ export default function Home() {
   const [mode, setMode] = useState<"auto" | "custom">("auto");
   const [custom, setCustom] = useState("");
 
-  const [msg, setMsg] = useState("");
-  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const [message, setMessage] = useState("");
+  const handleFormSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     //Send Req.
     //If not logged in first login/signup pop up
     //If already exists or error setMsg to it
@@ -40,7 +40,7 @@ export default function Home() {
               placeholder="Enter the custom url"
             />
           )}
-          {msg && <p>{msg}</p>}
+          {message && <p>{message}</p>}
           <button className="btn" type="submit">
             Create
           </button>
