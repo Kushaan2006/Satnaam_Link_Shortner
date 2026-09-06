@@ -8,15 +8,14 @@ import {
 import { api, setApiAccessToken } from "../api/api";
 import SplashScreen from "../components/SplashScreen";
 import { AuthContext, type User } from "./AuthContext";
-
-export let externalAccessToken: Dispatch<SetStateAction<string | null>>;
+import { registerAccessTokenSetter } from "./setReactComponents";
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
 
   const [user, setUser] = useState<User | null>(null);
   const [accessToken, setAccessToken] = useState<string | null>(null);
-  externalAccessToken = setAccessToken;
+  registerAccessTokenSetter(setAccessToken);
   const refresh = async () => {
     try {
       console.log("Getting Refresh Data");
