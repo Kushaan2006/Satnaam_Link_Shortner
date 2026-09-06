@@ -3,6 +3,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import urlRoutes from "./routes/urlRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
+import prisma from "./config/prisma.js";
 import { redirectUrl } from "./controllers/redirectUrlController.js";
 const app = express();
 
@@ -28,3 +29,8 @@ app.get("/:shortLink", redirectUrl);
 app.listen(3000, () => {
   console.log("Server running on port 3000");
 });
+
+prisma
+  .$connect()
+  .then(() => console.log("Database connected"))
+  .catch((err) => console.error("Database connection failed", err));

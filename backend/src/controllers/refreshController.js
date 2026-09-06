@@ -36,6 +36,7 @@ export const refreshController = async (req, res) => {
     });
   } catch (error) {
     console.error(`Refresh failed - ${error}`);
+    console.error(error);
     return res.status(500).json({
       message: "Could not refresh the session",
     });

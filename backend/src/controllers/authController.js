@@ -12,6 +12,8 @@ const refreshCookieOptions = {
 export const signUpController = async (req, res) => {
   try {
     const { name, email, password } = req.body;
+    if (!name || !email || !password)
+      throw new Error("The fields cannot be empty.");
     const result = await userSignUp(name, email, password);
     return res.status(201).json(result);
   } catch (error) {
@@ -23,6 +25,7 @@ export const signUpController = async (req, res) => {
 export const loginController = async (req, res) => {
   try {
     const { email, password } = req.body;
+    if (!email || !password) throw new Error("The fields cannot be empty.");
     const result = await userLogin(email, password);
     const accessToken = generateAccessToken(Number(result.user.id));
     const refreshToken = await createSession(Number(result.user.id));
@@ -33,6 +36,7 @@ export const loginController = async (req, res) => {
     });
   } catch (error) {
     console.error(`Login Failed ;-; - ${error}`);
+    console.error(error);
     return res.status(400).json({ message: error.message });
   }
 };

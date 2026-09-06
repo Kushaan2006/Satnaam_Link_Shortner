@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { api } from "../api/api";
 import axios from "axios";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function AuthModal() {
   const [mode, setMode] = useState<"login" | "signup">("login");
