@@ -1,8 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { api, setApiAccessToken } from "../api/api";
 
 export default function LogoutButton() {
   const { user, setUser, setAccessToken } = useAuth();
+  const navigate = useNavigate();
 
   const logout = async () => {
     try {
@@ -11,7 +13,7 @@ export default function LogoutButton() {
       setUser(null);
       setAccessToken(null);
       setApiAccessToken(null);
-      window.location.href = "/";
+      navigate("/");
     } catch (error) {
       console.error(`${user?.id} - ${user?.name}`, error);
     }
