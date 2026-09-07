@@ -13,7 +13,9 @@ export const createUrl = async (req, res) => {
     res.status(201).json(result);
   } catch (error) {
     console.log(`URL creation failed: ${error}`);
-    res.status(500).json({ message: "Failed to create URL" });
+    res.status(500).json({
+      message: error.message ? error.message : "Failed to create URL",
+    });
   }
 };
 
