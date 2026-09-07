@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { api } from "../api/api";
+import { api, setApiAccessToken } from "../api/api";
 import axios from "axios";
 import { useAuth } from "../../hooks/useAuth";
 
@@ -43,6 +43,7 @@ export default function AuthModal() {
         const response = await api.post("/auth/login", { email, password });
         setUser(response.data.user);
         setAccessToken(response.data.accessToken);
+        setApiAccessToken(response.data.accessToken);
         console.log(response.data);
         setVisible(false);
       } catch (error) {
