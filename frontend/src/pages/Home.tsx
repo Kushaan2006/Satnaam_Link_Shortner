@@ -72,7 +72,10 @@ export default function Home() {
           />
           <select
             value={mode}
-            onChange={(e) => setMode(e.target.value as "auto" | "custom")}
+            onChange={(e) => {
+              setMode(e.target.value as "auto" | "custom");
+              if (e.target.value === "auto") setCustom("");
+            }}
           >
             <option value="auto">Auto</option>
             <option value="custom">Custom</option>
