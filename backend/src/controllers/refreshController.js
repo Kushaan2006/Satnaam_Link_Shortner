@@ -30,6 +30,8 @@ export const refreshController = async (req, res) => {
 
     const accessToken = generateAccessToken(Number(userId));
 
+    console.log(`${user.id} - ${user.email} - Welcome Back!`);
+
     return res.status(200).json({
       accessToken,
       user,

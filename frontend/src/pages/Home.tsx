@@ -1,21 +1,30 @@
 import { useState } from "react";
 import AuthModal from "../components/AuthModal";
+import LogoutButton from "../components/LogoutButton";
+import { useAuth } from "../../hooks/useAuth";
+import { api } from "../api/api";
 
 export default function Home() {
+  const { user } = useAuth();
   const [url, setUrl] = useState("");
   const [mode, setMode] = useState<"auto" | "custom">("auto");
   const [custom, setCustom] = useState("");
 
   const [message, setMessage] = useState("");
   const handleFormSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
-    //Send Req.
-    //If not logged in first login/signup pop up
-    //If already exists or error setMsg to it
+    e.preventDefault();
+    try {
+      //Send Req.
+      const response = api.post;
+      //If not logged in first login/signup pop up
+      //If already exists or error setMsg to it
+    } catch (error) {}
   };
 
   return (
     <>
-      <AuthModal />
+      {!user && <AuthModal />}
+      <LogoutButton />
       <main>
         <h1>Shorten your link</h1>
         <form onSubmit={handleFormSubmit}>

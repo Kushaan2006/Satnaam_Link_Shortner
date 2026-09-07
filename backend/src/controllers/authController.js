@@ -15,6 +15,7 @@ export const signUpController = async (req, res) => {
     if (!name || !email || !password)
       throw new Error("The fields cannot be empty.");
     const result = await userSignUp(name, email, password);
+    console.log(`${name} - ${email} signed up :D`);
     return res.status(201).json(result);
   } catch (error) {
     console.error(`Signup Failed ;-; - ${error}`);
@@ -30,6 +31,8 @@ export const loginController = async (req, res) => {
     const accessToken = generateAccessToken(Number(result.user.id));
     const refreshToken = await createSession(Number(result.user.id));
     res.cookie("refreshToken", refreshToken, refreshCookieOptions);
+    console.log(`${email} - logged in :D`);
+
     return res.status(200).json({
       ...result,
       accessToken,
@@ -46,6 +49,7 @@ export const logoutController = async (req, res) => {
     const refreshToken = req.cookies.refreshToken;
     if (refreshToken) await deleteSession(refreshToken);
     res.clearCookie("refreshToken");
+    console.log(`Logged Out`);
     return res.status(200).json({
       message: "Logged Out",
     });

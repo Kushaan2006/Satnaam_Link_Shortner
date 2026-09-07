@@ -4,6 +4,7 @@ import axios from "axios";
 import { useAuth } from "../../hooks/useAuth";
 
 export default function AuthModal() {
+  const { user } = useAuth();
   const [mode, setMode] = useState<"login" | "signup">("login");
   const [visible, setVisible] = useState<true | false>(true);
 
