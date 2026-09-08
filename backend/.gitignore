@@ -4,3 +4,5 @@ node_modules
 generated/
 /generated/prisma
 *.log
+*.zip
+*.rar
