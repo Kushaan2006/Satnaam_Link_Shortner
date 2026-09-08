@@ -21,7 +21,10 @@ export default function LogoutButton() {
 
   return (
     <>
-      <button className="btn btn-accent btn-dash w-2xs" onClick={logout}>
+      <button
+        className="btn btn-accent btn-dash rounded-box z-1 ml-0 mt-3 w-48 p-2 shadow"
+        onClick={logout}
+      >
         Log Out
       </button>
     </>
