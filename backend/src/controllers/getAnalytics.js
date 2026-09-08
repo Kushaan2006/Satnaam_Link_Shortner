@@ -4,6 +4,8 @@ import prisma from "../config/prisma.js";
 export const getAnalytics = async (req, res) => {
   try {
     const urlId = Number(req.params.id);
+    console.log("Requested URL ID:", urlId);
+    console.log("Logged-in User ID:", req.user.id);
     const url = await prisma.url.findFirst({
       where: {
         id: urlId,
