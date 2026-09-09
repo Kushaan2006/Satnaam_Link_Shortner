@@ -26,6 +26,9 @@
   --color-base-200: #fff7ed;
   --color-base-300: #fed7aa;
   --color-base-content: #1f2937;
+
+  --color-error: #d14545;
+  --color-error-content: #bd5b5b;
 }
 
 :root {

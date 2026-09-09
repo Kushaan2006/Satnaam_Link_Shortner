@@ -22,7 +22,7 @@ export default function LogoutButton() {
   return (
     <>
       <button
-        className="btn btn-accent btn-dash rounded-box z-1 ml-0 mt-3 w-48 p-2 shadow"
+        className="btn btn-ghost m-0 h-11 w-full justify-start border-0 text-base-content hover:bg-base-200 border! rounded-xl font-semibold shadow-none transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-neutral"
         onClick={logout}
       >
         Log Out

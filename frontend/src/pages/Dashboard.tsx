@@ -46,10 +46,10 @@ export default function Dashboard() {
   };
 
   return (
-    <main className="mx-auto max-w-6xl p-6">
+    <main className="mx-auto w-full max-w-6xl px-4 py-10 text-base-content sm:px-8 sm:py-14">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold">Dashboard</h1>
-        <p className="text-base-content/60">
+        <h1 className="m-0! mb-3! text-3xl! leading-tight font-bold! text-base-content! sm:text-4xl!">Dashboard</h1>
+        <p className="text-base-content/75">
           Manage your links and track their performance.
         </p>
       </div>
@@ -60,30 +60,30 @@ export default function Dashboard() {
         </div>
       )}
 
-      <div className="stats stats-vertical mb-8 w-full shadow md:stats-horizontal">
-        <div className="stat">
-          <div className="stat-title">Total Links</div>
-          <div className="stat-value">{urls.length}</div>
+      <div className="stats stats-vertical mb-8 w-full overflow-hidden rounded-2xl border border-base-300 bg-base-100 shadow-sm sm:stats-horizontal">
+        <div className="stat gap-2 p-6 sm:p-8">
+          <div className="stat-title text-sm font-medium text-base-content/75">Total Links</div>
+          <div className="stat-value text-4xl font-semibold tracking-tight text-base-content tabular-nums">{urls.length}</div>
         </div>
 
-        <div className="stat">
-          <div className="stat-title">Total Clicks</div>
-          <div className="stat-value">{totalClicks}</div>
+        <div className="stat gap-2 p-6 sm:p-8">
+          <div className="stat-title text-sm font-medium text-base-content/75">Total Clicks</div>
+          <div className="stat-value text-4xl font-semibold tracking-tight text-base-content tabular-nums">{totalClicks}</div>
         </div>
       </div>
 
-      <div className="card bg-base-100 shadow">
-        <div className="card-body">
-          <h2 className="card-title">Your Links</h2>
+      <div className="card overflow-hidden rounded-2xl border border-base-300 bg-base-100 shadow-sm">
+        <div className="card-body gap-5 p-4 sm:p-7">
+          <h2 className="card-title m-0! text-xl! font-semibold! text-base-content!">Your Links</h2>
 
           {urls.length === 0 ? (
-            <div className="py-10 text-center text-base-content/60">
+            <div className="rounded-xl border border-dashed border-base-300 bg-base-200/50 px-4 py-16 text-center text-base-content/75">
               You haven't created any links yet.
             </div>
           ) : (
             <div className="overflow-x-auto">
-              <table className="table">
-                <thead>
+              <table className="table text-sm [&_td]:py-4 [&_th]:py-4">
+                <thead className="bg-base-200 text-xs uppercase tracking-wide text-base-content/75">
                   <tr>
                     <th>Original URL</th>
                     <th>Short URL</th>
@@ -95,7 +95,7 @@ export default function Dashboard() {
 
                 <tbody>
                   {urls.map((url) => (
-                    <tr key={url.id}>
+                    <tr key={url.id} className="border-base-300/60 hover:bg-base-200/60">
                       <td className="max-w-xs">
                         <div className="truncate">{url.url}</div>
                       </td>
@@ -105,14 +105,14 @@ export default function Dashboard() {
                           href={`${import.meta.env.VITE_BACKEND_URL}${url.shortUrl}`}
                           target="_blank"
                           rel="noreferrer"
-                          className="link link-primary"
+                          className="link font-medium text-base-content decoration-primary decoration-2 underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-neutral"
                         >
                           {url.shortUrl}
                         </a>
                       </td>
 
                       <td>
-                        <span className="badge badge-neutral">
+                        <span className="badge badge-neutral min-w-9 border-0 rounded-lg font-medium tabular-nums">
                           {url.totalClicks}
                         </span>
                       </td>
@@ -120,9 +120,9 @@ export default function Dashboard() {
                       <td>{new Date(url.dateTime).toLocaleDateString()}</td>
 
                       <td>
-                        <div className="flex gap-2">
+                        <div className="flex items-center gap-2">
                           <button
-                            className="btn btn-sm"
+                            className="btn btn-sm h-10 bg-base-100 text-base-content border-base-300 border! rounded-xl font-semibold shadow-none transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-neutral"
                             onClick={() => copyLink(url.shortUrl)}
                           >
                             Copy
@@ -130,7 +130,7 @@ export default function Dashboard() {
 
                           <Link
                             to={`/analytics/${url.id}`}
-                            className="btn btn-primary btn-sm"
+                            className="btn btn-primary btn-sm h-10 text-neutral border! rounded-xl font-semibold shadow-none transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-neutral"
                           >
                             Analytics
                           </Link>
