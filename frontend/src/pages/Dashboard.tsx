@@ -48,7 +48,9 @@ export default function Dashboard() {
   return (
     <main className="mx-auto w-full max-w-6xl px-4 py-10 text-base-content sm:px-8 sm:py-14">
       <div className="mb-8">
-        <h1 className="m-0! mb-3! text-3xl! leading-tight font-bold! text-base-content! sm:text-4xl!">Dashboard</h1>
+        <h1 className="m-0! mb-3! text-3xl! leading-tight font-bold! text-base-content! sm:text-4xl!">
+          Dashboard
+        </h1>
         <p className="text-base-content/75">
           Manage your links and track their performance.
         </p>
@@ -62,19 +64,29 @@ export default function Dashboard() {
 
       <div className="stats stats-vertical mb-8 w-full overflow-hidden rounded-2xl border border-base-300 bg-base-100 shadow-sm sm:stats-horizontal">
         <div className="stat gap-2 p-6 sm:p-8">
-          <div className="stat-title text-sm font-medium text-base-content/75">Total Links</div>
-          <div className="stat-value text-4xl font-semibold tracking-tight text-base-content tabular-nums">{urls.length}</div>
+          <div className="stat-title text-sm font-medium text-base-content/75">
+            Total Links
+          </div>
+          <div className="stat-value text-4xl font-semibold tracking-tight text-base-content tabular-nums">
+            {urls.length}
+          </div>
         </div>
 
         <div className="stat gap-2 p-6 sm:p-8">
-          <div className="stat-title text-sm font-medium text-base-content/75">Total Clicks</div>
-          <div className="stat-value text-4xl font-semibold tracking-tight text-base-content tabular-nums">{totalClicks}</div>
+          <div className="stat-title text-sm font-medium text-base-content/75">
+            Total Clicks
+          </div>
+          <div className="stat-value text-4xl font-semibold tracking-tight text-base-content tabular-nums">
+            {totalClicks}
+          </div>
         </div>
       </div>
 
       <div className="card overflow-hidden rounded-2xl border border-base-300 bg-base-100 shadow-sm">
         <div className="card-body gap-5 p-4 sm:p-7">
-          <h2 className="card-title m-0! text-xl! font-semibold! text-base-content!">Your Links</h2>
+          <h2 className="card-title m-0! text-xl! font-semibold! text-base-content!">
+            Your Links
+          </h2>
 
           {urls.length === 0 ? (
             <div className="rounded-xl border border-dashed border-base-300 bg-base-200/50 px-4 py-16 text-center text-base-content/75">
@@ -95,7 +107,10 @@ export default function Dashboard() {
 
                 <tbody>
                   {urls.map((url) => (
-                    <tr key={url.id} className="border-base-300/60 hover:bg-base-200/60">
+                    <tr
+                      key={url.id}
+                      className="border-base-300/60 hover:bg-base-200/60"
+                    >
                       <td className="max-w-xs">
                         <div className="truncate">{url.url}</div>
                       </td>

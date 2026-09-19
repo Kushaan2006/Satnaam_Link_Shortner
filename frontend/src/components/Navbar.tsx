@@ -4,6 +4,8 @@ import AuthModal from "./AuthModal";
 import { useEffect, useState } from "react";
 import LogoutButton from "./LogoutButton";
 
+import logo_horizontal from "../assets/logo_horizontal.png";
+
 export default function Navbar() {
   const { user, accessToken } = useAuth();
   const [showAuthModal, setShowAuthModal] = useState(false);
@@ -21,9 +23,9 @@ export default function Navbar() {
         <div className="flex-1 min-w-0">
           <Link
             to="/"
-            className="btn btn-ghost h-11 px-2 text-lg tracking-tight text-base-content sm:text-xl border! rounded-xl font-semibold shadow-none transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-neutral"
+            className="h-auto w-auto transition-all duration-300 hover:drop-shadow-[0_0_1.5px_theme(colors.accent)]"
           >
-            LinklyWinkly
+            <img src={logo_horizontal} className="h-10 w-auto" />
           </Link>
         </div>
         <div className="flex-none flex items-center gap-1 sm:gap-3">

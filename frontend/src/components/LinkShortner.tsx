@@ -20,7 +20,7 @@ export default function LinkShortner() {
       setPendingCreateReq(false);
       createReq();
     }
-  });
+  }, [user, pendingCreateReq]);
 
   const createReq = async () => {
     try {
