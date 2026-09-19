@@ -19,6 +19,20 @@ export const getOriginalUrl = async (shortLink) => {
 
   if (!url) return null;
 
+  if (url.expiresAt && new Date() >= url.expiresAt) {
+    throw new Error("URL Expired");
+  }
+
+  let cacheTtl = 60 * 60 * 6;
+
+  if (url.expiresAt) {
+    const secondsUntilExpiry = Math.floor(
+      (url.expiresAt.getTime() - Date.now()) / 1000,
+    );
+
+    cacheTtl = Math.min(cacheTtl, secondsUntilExpiry);
+  }
+
   await redis.set(
     cacheKey,
     {
@@ -26,7 +40,7 @@ export const getOriginalUrl = async (shortLink) => {
       url: url.url,
     },
     {
-      ex: 60 * 60 * 6,
+      ex: cacheTtl,
     },
   );
 

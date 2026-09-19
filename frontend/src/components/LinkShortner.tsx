@@ -9,6 +9,8 @@ export default function LinkShortner() {
   const [mode, setMode] = useState<"auto" | "custom">("auto");
   const [custom, setCustom] = useState("");
   const [outputUrl, setOutputUrl] = useState("");
+  const [isExpiring, setIsExpiring] = useState(false);
+  const [expiry, setExpiry] = useState<string | null>(null);
 
   const [showModal, setShowModal] = useState(false);
   const [pendingCreateReq, setPendingCreateReq] = useState(false);
@@ -25,7 +27,12 @@ export default function LinkShortner() {
   const createReq = async () => {
     try {
       //Send Req.
-      const response = await api.post("/urls/", { url, custom });
+      const expiryTime = expiry ? new Date(expiry).toISOString() : null;
+      const response = await api.post("/urls/", {
+        url,
+        custom,
+        expiry: expiryTime,
+      });
       console.log("Success created URL: ", response.data);
       setOutputUrl(
         `${import.meta.env.VITE_BACKEND_URL}${response.data.shortUrl}`,
@@ -92,6 +99,36 @@ export default function LinkShortner() {
             className="input w-full h-14 rounded-xl border! border-base-content/20 bg-base-100 text-base-content placeholder:text-base-content/60 focus:border-primary focus:outline-2 focus:outline-offset-2 focus:outline-neutral"
           />
         )}
+
+        <div className="space-y-3">
+          <label className="flex items-center gap-3 cursor-pointer">
+            <input
+              type="checkbox"
+              className="checkbox checkbox-primary"
+              checked={isExpiring}
+              onChange={(e) => {
+                setIsExpiring(e.target.checked);
+
+                if (!e.target.checked) {
+                  setExpiry(null);
+                }
+              }}
+            />
+
+            <span className="text-sm font-medium text-base-content">
+              Set an expiry date
+            </span>
+          </label>
+
+          {isExpiring && (
+            <input
+              type="datetime-local"
+              value={expiry ?? ""}
+              onChange={(e) => setExpiry(e.target.value)}
+              className="input w-full h-14 rounded-xl border border-base-content/20 bg-base-100 text-base-content focus:border-primary focus:outline-none"
+            />
+          )}
+        </div>
 
         {outputUrl && (
           <input

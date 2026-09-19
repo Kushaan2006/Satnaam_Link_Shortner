@@ -14,6 +14,8 @@ export const redirectUrl = async (req, res) => {
     return res.status(200).redirect(originalUrl);
   } catch (error) {
     console.log(`ERROR REDIRECTING: ${error}`);
-    res.status(500).json({ message: "Redirect Failed" });
+    res
+      .status(500)
+      .json({ message: error.message ? error.message : "Redirect Failed" });
   }
 };

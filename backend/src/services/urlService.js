@@ -1,7 +1,7 @@
 import prisma from "../config/prisma.js";
 import { generateUniqueShortCode } from "../utils/generateShortCode.js";
 
-export const createShortUrl = async (url, custom, userId) => {
+export const createShortUrl = async (url, custom, userId, expiry) => {
   const trimmedCustom = custom?.trim();
 
   let customUrlExists;
@@ -26,6 +26,7 @@ export const createShortUrl = async (url, custom, userId) => {
       url: url,
       shortUrl: shortCode,
       userId: userId,
+      expiresAt: expiry,
     },
   });
 };
