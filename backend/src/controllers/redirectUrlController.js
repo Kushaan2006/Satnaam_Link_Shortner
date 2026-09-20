@@ -11,11 +11,11 @@ export const redirectUrl = async (req, res) => {
       return res.status(404).json({ message: "Short URL not found ;-;" });
     }
     console.log(`${shortLink} - REDIRECT PASSED!`);
-    return res.status(200).redirect(originalUrl);
+    return res.status(200).json({ url: originalUrl });
   } catch (error) {
     console.log(`ERROR REDIRECTING: ${error}`);
     res
-      .status(500)
+      .status(error.message === "URL Expired" ? 410 : 500)
       .json({ message: error.message ? error.message : "Redirect Failed" });
   }
 };

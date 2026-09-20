@@ -40,7 +40,7 @@ export default function Dashboard() {
   const totalClicks = urls.reduce((sum, url) => sum + url.totalClicks, 0);
 
   const copyLink = async (shortUrl: string) => {
-    const fullUrl = `${import.meta.env.VITE_BACKEND_URL}${shortUrl}`;
+    const fullUrl = `${window.location.origin}/${shortUrl}`;
 
     await navigator.clipboard.writeText(fullUrl);
   };
@@ -117,7 +117,7 @@ export default function Dashboard() {
 
                       <td>
                         <a
-                          href={`${import.meta.env.VITE_BACKEND_URL}${url.shortUrl}`}
+                          href={`${window.location.origin}/${url.shortUrl}`}
                           target="_blank"
                           rel="noreferrer"
                           className="link font-medium text-base-content decoration-primary decoration-2 underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-neutral"

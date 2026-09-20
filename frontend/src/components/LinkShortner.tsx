@@ -34,9 +34,7 @@ export default function LinkShortner() {
         expiry: expiryTime,
       });
       console.log("Success created URL: ", response.data);
-      setOutputUrl(
-        `${import.meta.env.VITE_BACKEND_URL}${response.data.shortUrl}`,
-      );
+      setOutputUrl(`${window.location.origin}/${response.data.shortUrl}`);
     } catch (error) {
       console.error(error);
       //If already exists or error setMsg to it
