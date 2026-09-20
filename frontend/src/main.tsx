@@ -3,8 +3,7 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
 import { AuthProvider } from "./context/AuthProvider.tsx";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import RedirectPage from "./pages/RedirectPage.tsx";
+import { BrowserRouter } from "react-router-dom";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -12,9 +11,6 @@ createRoot(document.getElementById("root")!).render(
       <AuthProvider>
         <App />
       </AuthProvider>
-      <Routes>
-        <Route path="/:url" element={<RedirectPage />} />
-      </Routes>
     </BrowserRouter>
   </StrictMode>,
 );
