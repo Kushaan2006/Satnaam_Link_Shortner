@@ -9,7 +9,10 @@ export const getOriginalUrl = async (shortLink, password) => {
 
   if (cachedUrl) {
     if (cachedUrl.passwordHash) {
+      console.log(`${cachedUrl.id} - url is password protected`);
       if (!password) {
+        console.log(`${cachedUrl.id} - password req sent`);
+
         return {
           passwordProtected: true,
         };
@@ -19,12 +22,17 @@ export const getOriginalUrl = async (shortLink, password) => {
         cachedUrl.passwordHash,
       );
 
+      console.log(`${cachedUrl.id} - password recieved`);
+
       if (!passCheck) {
+        console.log(`${cachedUrl.id} - Wrong password`);
+
         throw Error("Wrong password!");
       }
     }
 
     recordClick(cachedUrl.id).catch(console.error);
+    console.log(`${cachedUrl.id} click recorded, redirecting`);
     return { passwordProtected: false, url: cachedUrl.url };
   }
 

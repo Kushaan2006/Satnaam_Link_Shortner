@@ -22,10 +22,12 @@ export default function RedirectPage() {
       );
 
       if (response.data.passwordProtected) {
+        console.log("Url is password protected");
         setShowPasswordInput(true);
         return;
       }
 
+      console.log("Checks passed - Redirecting");
       window.location.href = response.data.url;
     } catch (error) {
       if (axios.isAxiosError(error)) {

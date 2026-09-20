@@ -11,7 +11,15 @@ export const redirectUrl = async (req, res) => {
     if (!originalUrl) {
       return res.status(404).json({ message: "Short URL not found ;-;" });
     }
-    console.log(`${shortLink} - REDIRECT PASSED!`);
+
+    if (!originalUrl.passwordProtected) {
+      console.log(`${shortLink} - REDIRECT PASSED!`);
+    } else {
+      console.log(
+        `${shortLink} - Password protected, sent request for password`,
+      );
+    }
+
     return res.status(200).json(originalUrl);
   } catch (error) {
     console.log(`ERROR REDIRECTING: ${error}`);
