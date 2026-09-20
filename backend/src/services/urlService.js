@@ -1,7 +1,8 @@
 import prisma from "../config/prisma.js";
+import bycrypt from "bcrypt";
 import { generateUniqueShortCode } from "../utils/generateShortCode.js";
 
-export const createShortUrl = async (url, custom, userId, expiry) => {
+export const createShortUrl = async (url, custom, userId, expiry, password) => {
   const trimmedCustom = custom?.trim();
 
   let customUrlExists;
@@ -21,11 +22,14 @@ export const createShortUrl = async (url, custom, userId, expiry) => {
     ? trimmedCustom
     : await generateUniqueShortCode();
 
+  const passwordHash = password ? await bycrypt.hash(password, 10) : null;
+
   return await prisma.url.create({
     data: {
       url: url,
       shortUrl: shortCode,
       userId: userId,
+      passwordHash: passwordHash,
       expiresAt: expiry,
     },
   });

@@ -1,14 +1,31 @@
 import prisma from "../config/prisma.js";
 import redis from "../config/redis.js";
+import bcrypt from "bcrypt";
 import { recordClick } from "./recordClick.js";
 
-export const getOriginalUrl = async (shortLink) => {
+export const getOriginalUrl = async (shortLink, password) => {
   const cacheKey = `url:${shortLink}`;
   const cachedUrl = await redis.get(cacheKey);
 
   if (cachedUrl) {
+    if (cachedUrl.passwordHash) {
+      if (!password) {
+        return {
+          passwordProtected: true,
+        };
+      }
+      const passCheck = await bcrypt.compare(
+        password.trim(),
+        cachedUrl.passwordHash,
+      );
+
+      if (!passCheck) {
+        throw Error("Wrong password!");
+      }
+    }
+
     recordClick(cachedUrl.id).catch(console.error);
-    return cachedUrl.url;
+    return { passwordProtected: false, url: cachedUrl.url };
   }
 
   const url = await prisma.url.findUnique({
@@ -21,6 +38,18 @@ export const getOriginalUrl = async (shortLink) => {
 
   if (url.expiresAt && new Date() >= url.expiresAt) {
     throw new Error("URL Expired");
+  }
+
+  if (url.passwordHash) {
+    if (!password) {
+      return {
+        passwordProtected: true,
+      };
+    }
+    const checkPass = await bcrypt.compare(password.trim(), url.passwordHash);
+    if (!checkPass) {
+      throw new Error("Wrong Password");
+    }
   }
 
   let cacheTtl = 60 * 60 * 6;
@@ -38,6 +67,7 @@ export const getOriginalUrl = async (shortLink) => {
     {
       id: url.id,
       url: url.url,
+      passwordHash: url.passwordHash,
     },
     {
       ex: cacheTtl,
@@ -46,5 +76,8 @@ export const getOriginalUrl = async (shortLink) => {
 
   recordClick(url.id).catch(console.error);
 
-  return url?.url;
+  return {
+    passwordProtected: false,
+    url: url.url,
+  };
 };

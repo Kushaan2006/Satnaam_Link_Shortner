@@ -9,6 +9,10 @@ export default function LinkShortner() {
   const [mode, setMode] = useState<"auto" | "custom">("auto");
   const [custom, setCustom] = useState("");
   const [outputUrl, setOutputUrl] = useState("");
+
+  const [hasPassword, setHasPassword] = useState(false);
+  const [password, setPassword] = useState<string | null>(null);
+
   const [isExpiring, setIsExpiring] = useState(false);
   const [expiry, setExpiry] = useState<string | null>(null);
 
@@ -25,6 +29,11 @@ export default function LinkShortner() {
   }, [user, pendingCreateReq]);
 
   const createReq = async () => {
+    const passCleaned = password ? password.trim() : null;
+    if (hasPassword && !passCleaned) {
+      setMessage("The password cannot be empty");
+      return;
+    }
     try {
       //Send Req.
       const expiryTime = expiry ? new Date(expiry).toISOString() : null;
@@ -32,6 +41,8 @@ export default function LinkShortner() {
         url,
         custom,
         expiry: expiryTime,
+        hasPassword: hasPassword,
+        password: passCleaned,
       });
       console.log("Success created URL: ", response.data);
       setOutputUrl(`${window.location.origin}/${response.data.shortUrl}`);
@@ -123,6 +134,36 @@ export default function LinkShortner() {
               type="datetime-local"
               value={expiry ?? ""}
               onChange={(e) => setExpiry(e.target.value)}
+              className="input w-full h-14 rounded-xl border border-base-content/20 bg-base-100 text-base-content focus:border-primary focus:outline-none"
+            />
+          )}
+        </div>
+        <div className="space-y-3">
+          <label className="flex items-center gap-3 cursor-pointer">
+            <input
+              type="checkbox"
+              className="checkbox checkbox-primary"
+              checked={hasPassword}
+              onChange={(e) => {
+                setHasPassword(e.target.checked);
+
+                if (!e.target.checked) {
+                  setPassword(null);
+                }
+              }}
+            />
+
+            <span className="text-sm font-medium text-base-content">
+              Set Password
+            </span>
+          </label>
+
+          {hasPassword && (
+            <input
+              type="password"
+              value={password ?? ""}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Set Password..."
               className="input w-full h-14 rounded-xl border border-base-content/20 bg-base-100 text-base-content focus:border-primary focus:outline-none"
             />
           )}

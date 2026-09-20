@@ -2,7 +2,7 @@ import { createShortUrl } from "../services/urlService.js";
 
 export const createUrl = async (req, res) => {
   try {
-    const { url, custom, expiry } = req.body;
+    const { url, custom, expiry, hasPassword, password } = req.body;
     if (!url || !url.trim()) {
       return res.status(400).json({
         message: "URL is missing",
@@ -27,7 +27,19 @@ export const createUrl = async (req, res) => {
       }
     }
 
-    const result = await createShortUrl(url, custom, req.user.id, expiryDate);
+    if (hasPassword && !password) {
+      return res.status(400).json({
+        message: "No password detected",
+      });
+    }
+
+    const result = await createShortUrl(
+      url,
+      custom,
+      req.user.id,
+      expiryDate,
+      password,
+    );
     console.log(custom?.trim() ? `Created custom URL` : `Short URL created`);
     res.status(201).json(result);
   } catch (error) {

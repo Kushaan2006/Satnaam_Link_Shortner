@@ -30,14 +30,16 @@ model User {
 }
 
 model Url {
-  id        Int       @id @default(autoincrement())
-  userId    Int
-  url       String
-  shortUrl  String    @unique
-  dateTime  DateTime  @default(now())
-  expiresAt DateTime?
-  user      User      @relation(fields: [userId], references: [id])
-  click     Clicks[]
+  id           Int       @id @default(autoincrement())
+  userId       Int
+  url          String
+  shortUrl     String    @unique
+  dateTime     DateTime  @default(now())
+  expiresAt    DateTime?
+  passwordHash String?
+
+  user  User     @relation(fields: [userId], references: [id])
+  click Clicks[]
 }
 
 model Clicks {

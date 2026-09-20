@@ -12,6 +12,6 @@ router.post("/", checkAuth, createUrlLimiter, createUrl);
 router.get("/", checkAuth, getUrlsController);
 router.get("/:id/analytics", checkAuth, getAnalytics);
 router.get("/test", testUrlRoute);
-router.get("/:shortLink", redirectUrl);
+router.post("/:shortLink", redirectUrl);
 
 export default router;
