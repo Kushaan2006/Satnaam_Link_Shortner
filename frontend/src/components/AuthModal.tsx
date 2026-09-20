@@ -3,7 +3,7 @@ import { api, setApiAccessToken } from "../api/api";
 import axios from "axios";
 import { useAuth } from "../../hooks/useAuth";
 
-export default function AuthModal() {
+export default function AuthModal({ onClose }: { onClose: () => void }) {
   const { user } = useAuth();
   const [mode, setMode] = useState<"login" | "signup">("login");
   const [visible, setVisible] = useState<true | false>(true);
@@ -62,6 +62,14 @@ export default function AuthModal() {
       {visible && (
         <div className="modal modal-open bg-neutral/50 p-4 text-base-content backdrop-blur-sm">
           <div className="modal-box w-full max-w-md rounded-3xl border border-base-300 bg-base-100 p-6 shadow-2xl sm:p-8">
+            <button
+              type="button"
+              onClick={() => onClose()}
+              className="btn btn-sm btn-circle btn-ghost absolute right-4 top-4"
+              aria-label="Close"
+            >
+              ✕
+            </button>
             <div className="tabs tabs-boxed mb-6 grid grid-cols-2 gap-1 rounded-2xl bg-base-200 p-1.5">
               <button
                 type="button"
@@ -78,7 +86,11 @@ export default function AuthModal() {
                 Sign Up
               </button>
             </div>
-            {message && <p className="error mb-5 rounded-xl border border-base-300 bg-base-200 p-4 text-sm leading-relaxed text-base-content">{message}</p>}
+            {message && (
+              <p className="error mb-5 rounded-xl border border-base-300 bg-base-200 p-4 text-sm leading-relaxed text-base-content">
+                {message}
+              </p>
+            )}
             <form onSubmit={handleFormSubmit} className="space-y-4">
               {mode === "signup" && (
                 <input

@@ -81,7 +81,7 @@ export const createUrlLimiter = async (req, res, next) => {
     const count = await redis.incr(key);
 
     if (count === 1) {
-      await redis.expire(key, 60);
+      await redis.expire(key, 30);
     }
 
     if (count > 5) {

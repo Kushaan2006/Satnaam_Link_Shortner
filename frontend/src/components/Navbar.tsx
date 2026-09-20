@@ -18,7 +18,13 @@ export default function Navbar() {
 
   return (
     <>
-      {showAuthModal && <AuthModal />}
+      {showAuthModal && (
+        <AuthModal
+          onClose={() => {
+            setShowAuthModal(false);
+          }}
+        />
+      )}
       <div className="navbar relative z-20 min-h-20 flex-wrap gap-y-2 border-b border-base-300 bg-base-100 px-4 py-3 text-base-content sm:px-8 lg:px-[max(2rem,calc((100vw-68rem)/2))]">
         <div className="flex-1 min-w-0">
           <Link

@@ -29,6 +29,8 @@
 
   --color-error: #d14545;
   --color-error-content: #bd5b5b;
+
+  --color-success: #10b981;
 }
 
 :root {

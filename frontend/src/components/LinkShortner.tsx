@@ -20,6 +20,8 @@ export default function LinkShortner() {
   const [pendingCreateReq, setPendingCreateReq] = useState(false);
   const [message, setMessage] = useState("");
 
+  const [copied, setCopied] = useState(false);
+
   useEffect(() => {
     if (user && pendingCreateReq) {
       setShowModal(false);
@@ -46,6 +48,7 @@ export default function LinkShortner() {
       });
       console.log("Success created URL: ", response.data);
       setOutputUrl(`${window.location.origin}/${response.data.shortUrl}`);
+      setMessage("");
     } catch (error) {
       console.error(error);
       //If already exists or error setMsg to it
@@ -72,7 +75,14 @@ export default function LinkShortner() {
 
   return (
     <>
-      {showModal && <AuthModal />}
+      {showModal && (
+        <AuthModal
+          onClose={() => {
+            setShowModal(false);
+            setPendingCreateReq(false);
+          }}
+        />
+      )}
 
       <h1 className="m-0! mb-6! text-xl! leading-snug font-semibold! tracking-tight! text-base-content!">
         Shorten your link
@@ -169,19 +179,29 @@ export default function LinkShortner() {
           )}
         </div>
 
-        {outputUrl && (
+        {outputUrl && !message && (
           <input
             readOnly
             value={outputUrl}
-            onClick={() => {
+            onClick={async () => {
               //navigate to url
+              await navigator.clipboard.writeText(outputUrl);
+              setCopied(true);
+
+              setTimeout(() => {
+                setCopied(false);
+              }, 2000);
             }}
-            className="input w-full h-14 rounded-xl border! border-base-content/20 bg-base-100 text-base-content placeholder:text-base-content/60 focus:border-primary focus:outline-2 focus:outline-offset-2 focus:outline-neutral border-primary/50 bg-base-200 font-mono text-sm select-all"
+            className="input  w-full h-14 rounded-xl border! border-base-content/20 bg-base-100 text-base-content placeholder:text-base-content/60 focus:border-primary focus:outline-2 focus:outline-offset-2 focus:outline-neutral border-primary/50 bg-base-200 font-mono text-sm select-all"
           />
         )}
 
+        {copied && (
+          <p className="mb-2! text-sm text-success!">Copied to clipboard</p>
+        )}
+
         {message && (
-          <p className="rounded-xl border border-error/30 bg-base-100 p-4 text-sm leading-relaxed font-medium text-error">
+          <p className="mb-4! rounded-xl border border-error/30 bg-base-100 p-4 text-sm leading-relaxed font-medium text-error">
             {message}
           </p>
         )}
