@@ -4,7 +4,6 @@ import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import RouteProtection from "./components/RouteProtection";
 import Analytics from "./pages/Analytics";
-import RedirectPage from "./pages/RedirectPage";
 
 export default function App() {
   return (

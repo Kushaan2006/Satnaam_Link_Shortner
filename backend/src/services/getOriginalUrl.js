@@ -27,7 +27,7 @@ export const getOriginalUrl = async (shortLink, password) => {
       if (!passCheck) {
         console.log(`${cachedUrl.id} - Wrong password`);
 
-        throw Error("Wrong password!");
+        throw Error("Wrong Password");
       }
     }
 

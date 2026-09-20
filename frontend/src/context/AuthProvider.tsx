@@ -1,10 +1,4 @@
-import {
-  useEffect,
-  useState,
-  type Dispatch,
-  type ReactNode,
-  type SetStateAction,
-} from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { api, setApiAccessToken } from "../api/api";
 import SplashScreen from "../components/SplashScreen";
 import { AuthContext, type User } from "./AuthContext";

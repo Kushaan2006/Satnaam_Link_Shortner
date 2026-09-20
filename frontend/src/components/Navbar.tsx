@@ -16,6 +16,8 @@ export default function Navbar() {
     }
   }, [user, showAuthModal]);
 
+  console.log(`${accessToken ? "User Logged in" : "User not found"}`);
+
   return (
     <>
       {showAuthModal && (
