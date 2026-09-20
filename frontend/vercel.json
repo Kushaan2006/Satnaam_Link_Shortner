@@ -1,7 +1,23 @@
 {
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/api/:path*",
+      "destination": "https://linklywinkly-backend.vercel.app/api/:path*"
+    },
+    {
+      "source": "/dashboard",
+      "destination": "/"
+    },
+    {
+      "source": "/analytics",
+      "destination": "/"
+    },
+    {
+      "source": "/analytics/:path*",
+      "destination": "/"
+    },
+    {
+      "source": "/:url",
       "destination": "/"
     }
   ]

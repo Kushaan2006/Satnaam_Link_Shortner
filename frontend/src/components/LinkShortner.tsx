@@ -39,7 +39,7 @@ export default function LinkShortner() {
     try {
       //Send Req.
       const expiryTime = expiry ? new Date(expiry).toISOString() : null;
-      const response = await api.post("/urls/", {
+      const response = await api.post("/urls", {
         url,
         custom,
         expiry: expiryTime,

@@ -2,10 +2,12 @@ import { userLogin, userSignUp } from "../services/authService.js";
 import { createSession, deleteSession } from "../services/sessionService.js";
 import { generateAccessToken } from "../utils/generateTokens.js";
 
+const isProduction = process.env.NODE_ENV === "production";
+
 const refreshCookieOptions = {
   httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
-  sameSite: "lax",
+  secure: isProduction,
+  sameSite: isProduction ? "none" : "lax",
   maxAge: 30 * 24 * 60 * 60 * 1000,
 };
 
@@ -48,7 +50,7 @@ export const logoutController = async (req, res) => {
   try {
     const refreshToken = req.cookies.refreshToken;
     if (refreshToken) await deleteSession(refreshToken);
-    res.clearCookie("refreshToken");
+    res.clearCookie("refreshToken", refreshCookieOptions);
     console.log(`Logged Out`);
     return res.status(200).json({
       message: "Logged Out",

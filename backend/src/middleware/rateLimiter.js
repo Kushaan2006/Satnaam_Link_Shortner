@@ -57,7 +57,7 @@ export const refreshLimiter = async (req, res, next) => {
     const count = await redis.incr(key);
 
     if (count === 1) {
-      await redis.expire(key, 60);
+      await redis.expire(key, 20);
     }
 
     if (count > 5) {
