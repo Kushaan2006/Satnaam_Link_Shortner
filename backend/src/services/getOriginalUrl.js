@@ -31,7 +31,7 @@ export const getOriginalUrl = async (shortLink, password) => {
       }
     }
 
-    recordClick(cachedUrl.id).catch(console.error);
+    await recordClick(cachedUrl.id);
     console.log(`${cachedUrl.id} click recorded, redirecting`);
     return { passwordProtected: false, url: cachedUrl.url };
   }
@@ -82,7 +82,7 @@ export const getOriginalUrl = async (shortLink, password) => {
     },
   );
 
-  recordClick(url.id).catch(console.error);
+  await recordClick(url.id);
 
   return {
     passwordProtected: false,
